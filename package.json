@@ -1,0 +1,58 @@
+{
+  "name": "jardicor-web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Jardicor · Constructora Verde",
+  "productName": "Jardicor",
+  "author": "Picu Zeballos",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite-ssg build",
+    "preview": "vite preview",
+    "lint": "eslint --ext .js,.ts,.vue ./",
+    "format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",
+    "typecheck": "vue-tsc --noEmit",
+    "test": "echo \"No test specified\" && exit 0"
+  },
+  "dependencies": {
+    "@unhead/vue": "^2.1.2",
+    "quasar": "^2.28.0",
+    "unhead": "2.1.17",
+    "vue": "^3.5.42",
+    "vue-router": "^5.3.0"
+  },
+  "devDependencies": {
+    "@quasar/vite-plugin": "^2.0.2",
+    "@types/node": "^22.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "@vitejs/plugin-vue": "^6.0.8",
+    "autoprefixer": "^10.4.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-vue": "^9.0.0",
+    "postcss": "^8.5.0",
+    "prettier": "^3.3.0",
+    "sass-embedded": "^1.103.1",
+    "typescript": "^5.9.0",
+    "vite": "^8.2.2",
+    "vite-ssg": "^28.3.0",
+    "vue-tsc": "^3.1.0"
+  },
+  "browserslist": [
+    "last 10 Chrome versions",
+    "last 10 Firefox versions",
+    "last 4 Edge versions",
+    "last 7 Safari versions",
+    "last 8 Android versions",
+    "last 8 ChromeAndroid versions",
+    "last 8 FirefoxAndroid versions",
+    "last 10 iOS versions",
+    "last 5 Opera versions"
+  ],
+  "engines": {
+    "node": ">= 20.19.0",
+    "yarn": ">= 1.21.1"
+  }
+}

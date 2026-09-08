@@ -1,0 +1,57 @@
+// Entrada del CSS de Quasar, a medida.
+// --------------------------------------------------
+// Reemplaza a `quasar/src/css/index.sass`, que importa el CSS de los ~70
+// componentes del framework. Este sitio usa seis. Importando solo lo que se
+// usa, el CSS del bundle baja de 39 a 32 KB gzip — y eso deja lugar para el
+// `flex-addon`, que es lo que hace responsive a las clases de espaciado.
+//
+// AL SUMAR UN COMPONENTE DE QUASAR hay que agregar su `@import` aca. Si falta,
+// el componente renderiza sin estilos: se ve enseguida, no falla en silencio.
+
+@import 'quasar/src/css/helpers/string.sass'
+@import 'quasar/src/css/helpers/math.sass'
+
+@import 'quasar/src/css/variables.sass'
+@import 'quasar/src/css/normalize.sass'
+
+// ---------- Componentes en uso ----------
+// QLayout.sass trae ademas .q-header, .q-footer, .q-page y .q-layout-padding.
+@import 'quasar/src/components/layout/QLayout.sass'
+@import 'quasar/src/components/btn/QBtn.sass'
+@import 'quasar/src/components/field/QField.sass'
+@import 'quasar/src/components/input/QInput.sass'
+@import 'quasar/src/components/form/QForm.sass'
+@import 'quasar/src/components/icon/QIcon.sass'
+// QBtn con `loading` monta un QSpinner.
+@import 'quasar/src/components/spinner/QSpinner.sass'
+// Los avisos de envio del formulario (`composables/useToast.ts`). Es un plugin,
+// no un componente, pero su CSS se importa igual.
+@import 'quasar/src/plugins/notify/Notify.sass'
+
+// El ripple de QBtn es una directiva, no un componente.
+@import 'quasar/src/directives/ripple/Ripple.sass'
+
+// ---------- Core ----------
+// Se omiten a proposito:
+//   · elevation.sass  — el sistema declara elevacion con borde o fondo, nunca
+//                       con sombra, asi que `.shadow-*` no se usa
+//   · dark.sass       — el sitio no tiene modo oscuro; la inversion de paneles
+//                       es propia (`.inv` en app.scss)
+//   · orientation.sass — no se usa ninguna de sus clases
+@import 'quasar/src/css/core/animations.sass'
+@import 'quasar/src/css/core/colors.sass'
+@import 'quasar/src/css/core/flex.sass'
+@import 'quasar/src/css/core/helpers.sass'
+@import 'quasar/src/css/core/mouse.sass'
+@import 'quasar/src/css/core/positioning.sass'
+@import 'quasar/src/css/core/size.sass'
+@import 'quasar/src/css/core/touch.sass'
+@import 'quasar/src/css/core/transitions.sass'
+@import 'quasar/src/css/core/typography.sass'
+@import 'quasar/src/css/core/visibility.sass'
+
+// El `cssAddon` del CLI de Quasar. Genera la variante responsive de cada clase
+// de padding, margin y alineacion: `q-py-md-5xl` es "128px desde el breakpoint
+// md hacia arriba". Es lo que permite que el espaciado viva en el template y no
+// en media queries. El referente lo tiene activado.
+@import 'quasar/src/css/flex-addon.sass'

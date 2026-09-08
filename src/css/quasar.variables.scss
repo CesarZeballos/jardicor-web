@@ -1,0 +1,343 @@
+// Quasar SCSS (& Sass) Variables
+// --------------------------------------------------
+// Este archivo es LA configuracion del sistema visual, no una lista de colores.
+// Quasar genera desde aca la escala tipografica, el espaciado, los botones y los
+// campos de formulario. Todo lo que se pueda declarar como variable se declara
+// aca: en los componentes no se vuelve a escribir a mano.
+//
+// Los valores de color salen de un muestreo de pixeles sobre los dos brochures
+// del cliente, no de una paleta inventada:
+//   · ESPACIOS VERDES BROCHURE_JARDICOR 2026.pdf   (identidad)
+//   · JARDICOR_Infraestructura_Verde_Brochure.pdf  (estructura web)
+//
+// CUIDADO AL AGREGAR VARIABLES: el plugin de Quasar inyecta este archivo ANTES
+// que `quasar/src/css/variables.sass`, que declara las suyas con `!default`. Un
+// nombre repetido le pisa la variable a Quasar. Antes de agregar una, verificar
+// que no exista ya en ese archivo.
+
+/***************************************/
+/*          TIPOGRAFIA                 */
+/***************************************/
+
+// Las familias se cargan desde index.html con preconnect y display=swap. No se
+// importan aca: un `@import url()` en SCSS compila a un @import de CSS, que
+// bloquea el render y castiga el LCP.
+//
+// IBM Plex Sans lleva el cuerpo: su caracter tecnico aterriza el vocabulario de
+// operaciones — predios, cuadrillas, perimetros.
+$typography-font-family:
+  'IBM Plex Sans',
+  system-ui,
+  -apple-system,
+  sans-serif !default;
+// Outfit lleva la voz de marca (geometrica redonda, lo mas cercano a la portada
+// del brochure sin caer en Poppins). No es una variable de Quasar: la aplica
+// `app.scss` sobre los encabezados.
+$display-font-family:
+  'Outfit', 'Century Gothic', system-ui, sans-serif !default;
+
+$body-font-size: 16px !default; // minimo para no disparar el zoom de iOS
+$body-line-height: 1.625 !default;
+$min-line-height: 1.12 !default;
+
+// Escala de encabezados. Quasar la usa para dos cosas a la vez: estiliza los tags
+// `h1`..`h6` y genera las clases `.text-h1`..`.text-h6`. Por eso un `<h3>` ya sale
+// bien sin tocarlo, y cuando un titulo necesita otro tamano se le pone la clase
+// del escalon que corresponde en vez de escribir CSS.
+//
+// Los dos primeros escalones van con `clamp()`: el H1 mide 32px en mobile y 48 en
+// desktop, fluido en el medio, y el H2 24 y 36. Eso reemplaza a las media queries
+// que antes pisaban el tamano — el diseno responsive queda declarado en la propia
+// variable y no en una regla aparte.
+// El termino del medio es `rem + vw` y no `vw` solo: con `vw` puro el texto deja
+// de responder al zoom del navegador.
+$h1: (
+  size: clamp(2rem, 1rem + 2.667vw, 3rem),
+  line-height: 1.107,
+  letter-spacing: -0.015em,
+  weight: 600,
+) !default;
+$h2: (
+  size: clamp(1.5rem, 0.75rem + 2vw, 2.25rem),
+  line-height: 1.15,
+  letter-spacing: -0.01em,
+  weight: 600,
+) !default;
+$h3: (
+  size: 1.5rem,
+  line-height: 1.4,
+  letter-spacing: -0.01em,
+  weight: 500,
+) !default;
+$h4: (
+  size: 1.375rem,
+  line-height: 1.32,
+  letter-spacing: normal,
+  weight: 500,
+) !default;
+$h5: (
+  size: 1.25rem,
+  line-height: 1.35,
+  letter-spacing: normal,
+  weight: 500,
+) !default;
+$h6: (
+  size: 1.1875rem,
+  line-height: 1.4,
+  letter-spacing: normal,
+  weight: 500,
+) !default;
+
+// `subtitle1` es la bajada, `overline` la etiqueta de seccion y `body2` el texto
+// chico. Se nombran como los nombra Quasar para poder usar `.text-subtitle1` y
+// compania en el markup.
+$subtitle1: (
+  size: clamp(1.0625rem, 0.9375rem + 0.333vw, 1.1875rem),
+  line-height: 1.58,
+  letter-spacing: normal,
+  weight: 400,
+) !default;
+$subtitle2: (
+  size: 1rem,
+  line-height: 1.5,
+  letter-spacing: normal,
+  weight: 500,
+) !default;
+$body1: (
+  size: 1rem,
+  line-height: 1.625,
+  letter-spacing: normal,
+  weight: 400,
+) !default;
+$body2: (
+  size: 0.875rem,
+  line-height: 1.57,
+  letter-spacing: normal,
+  weight: 400,
+) !default;
+$overline: (
+  size: 0.8125rem,
+  line-height: 1.23,
+  letter-spacing: 0.08em,
+  weight: 500,
+) !default;
+$caption: (
+  size: 0.75rem,
+  line-height: 1.25,
+  letter-spacing: 0.03em,
+  weight: 400,
+) !default;
+
+/***************************************/
+/*          ESPACIADO                  */
+/***************************************/
+
+// Escala del diseno, en nueve escalones. Quasar genera desde este mapa todas las
+// clases de padding y margin: `.q-pa-lg`, `.q-mt-2xl`, `.q-px-5xl`, etc.
+//
+// `xl` vale 32 y no 48 como en un Quasar de fabrica. Es a proposito: es el paso
+// que usa el diseno para el padding del envoltorio y los gaps intermedios.
+$space-base: 16px !default;
+$space-none: (
+  x: 0,
+  y: 0,
+) !default;
+$space-xs: (
+  x: 4px,
+  y: 4px,
+) !default;
+$space-sm: (
+  x: 8px,
+  y: 8px,
+) !default;
+$space-md: (
+  x: 16px,
+  y: 16px,
+) !default;
+$space-lg: (
+  x: 24px,
+  y: 24px,
+) !default;
+$space-xl: (
+  x: 32px,
+  y: 32px,
+) !default;
+$space-2xl: (
+  x: 48px,
+  y: 48px,
+) !default;
+$space-3xl: (
+  x: 64px,
+  y: 64px,
+) !default;
+$space-4xl: (
+  x: 96px,
+  y: 96px,
+) !default;
+$space-5xl: (
+  x: 128px,
+  y: 128px,
+) !default;
+
+// sorry for long line; we need .sass and it doesn't support multi-line list
+$spaces: (
+  'none': $space-none,
+  'xs': $space-xs,
+  'sm': $space-sm,
+  'md': $space-md,
+  'lg': $space-lg,
+  'xl': $space-xl,
+  '2xl': $space-2xl,
+  '3xl': $space-3xl,
+  '4xl': $space-4xl,
+  '5xl': $space-5xl,
+) !default;
+
+// Gutters de la grilla, alineados a la misma escala: `.q-col-gutter-2xl` = 48px.
+$flex-gutter-xs: 4px !default;
+$flex-gutter-sm: 8px !default;
+$flex-gutter-md: 16px !default;
+$flex-gutter-lg: 24px !default;
+$flex-gutter-xl: 32px !default;
+$flex-gutter-2xl: 48px !default;
+$flex-gutter-3xl: 64px !default;
+$flex-gutter-4xl: 96px !default;
+$flex-gutter-5xl: 128px !default;
+
+// sorry for long line; we need .sass and it doesn't support multi-line list
+$flex-gutter: (
+  'none': 0,
+  'xs': $flex-gutter-xs,
+  'sm': $flex-gutter-sm,
+  'md': $flex-gutter-md,
+  'lg': $flex-gutter-lg,
+  'xl': $flex-gutter-xl,
+  '2xl': $flex-gutter-2xl,
+  '3xl': $flex-gutter-3xl,
+  '4xl': $flex-gutter-4xl,
+  '5xl': $flex-gutter-5xl,
+) !default;
+
+/***************************************/
+/*          COLOR                      */
+/***************************************/
+
+$primary: #174538 !default; // verde de marca: logo y titulos del brochure EV
+$secondary: #4a6a5c !default;
+$accent: #6f8d74 !default;
+
+$dark: #173d30 !default; // paneles a sangre del brochure Infraestructura
+$dark-page: #0f2a21 !default;
+
+$positive: #4a6a5c !default;
+$negative: #a33a2a !default;
+$info: #4a6a5c !default;
+$warning: #a33a2a !default;
+
+$separator-color: #d9d7c4 !default;
+$separator-dark-color: #4a6a5c !default;
+
+// Primitivas (valores crudos) + semanticas (rol en la interfaz) en un solo mapa.
+// De aca salen las clases .text-*, .bg-* y .border-* que genera app.scss, cada
+// una emitiendo `var(--q-clave, #valor)`: el fallback es el color claro y la
+// variable es lo que redefine `.inv` para dar vuelta un panel entero.
+$custom-colors: (
+  // ---------- Primitivas ----------
+  green-900: #0f2a21,
+  green-800: #173d30,
+  green-700: #174538,
+  green-500: #4a6a5c,
+  green-400: #6f8d74,
+  green-200: #c6d2c4,
+  green-100: #e7ece2,
+  cream-100: #fbfaf2,
+  cream-50: #f5f3e7,
+  sand-300: #d9d7c4,
+  alert-600: #a33a2a,
+  alert-300: #e8a598,
+
+  // ---------- Semanticas ----------
+  background: #f5f3e7,
+  surface: #ffffff,
+  surface-soft: #e7ece2,
+  content: #174538,
+  content-soft: #4a6a5c,
+  // Borde decorativo: separa superficies. No transmite informacion, asi que no
+  // le aplica el minimo de 3:1 de WCAG 1.4.11.
+  line: #d9d7c4,
+  // Borde de control: define el limite de un campo que el usuario tiene que
+  // percibir. Si le aplica el 3:1. Da 3,29:1.
+  line-strong: #6f8d74,
+  action-hover: #0f2a21,
+  on-action: #f5f3e7,
+  focus: #6f8d74
+) !default;
+
+// Inversion para paneles verdes. Redefine las mismas claves —mas `primary`, que
+// es de Quasar— asi que ningun componente necesita saber sobre que fondo esta.
+$inverted-colors: (
+  background: #173d30,
+  surface: #174538,
+  surface-soft: #0f2a21,
+  content: #f5f3e7,
+  content-soft: #c6d2c4,
+  line: #4a6a5c,
+  line-strong: #6f8d74,
+  action-hover: #ffffff,
+  on-action: #173d30,
+  focus: #c6d2c4,
+  primary: #f5f3e7,
+  negative: #e8a598,
+) !default;
+
+/***************************************/
+/*          FORMA                      */
+/***************************************/
+
+// Por debajo de 12 el radio de una tarjeta se lee como accidente; en un control
+// chico, 12 se lee como pastilla. Por eso son dos escalones distintos.
+$generic-border-radius: 4px !default;
+$radii: (
+  sm: 4px,
+  md: 12px,
+  full: 999px,
+) !default;
+
+$generic-hover-transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1) !default;
+
+// Trazos. El de foco lo consume `app.scss`; el de icono, los SVG del sprite.
+$stroke-thin: 1px !default;
+$stroke-icon: 1.5px !default;
+$stroke-focus: 2px !default;
+// Borde de enfasis: lo usa `.border-thick` para el aviso de error, donde un
+// pelo de 1px no alcanza para que se lea como alerta.
+$stroke-thick: 2px !default;
+
+// Ancho del contenido y medida de lectura (entre 60 y 75 caracteres).
+$content-width: 1200px !default;
+$text-width: 68ch !default;
+
+/***************************************/
+/*          COMPONENTES DE QUASAR      */
+/***************************************/
+
+// QBtn. 12px de padding vertical sobre 24px de interlineado dan los 48px de alto
+// del sistema, sin tener que fijar `min-height` a mano en ningun lado.
+$button-border-radius: $generic-border-radius !default;
+$button-font-size: 16px !default;
+$button-line-height: 1.5 !default;
+$button-font-weight: 500 !default;
+$button-padding: 12px 24px !default;
+$button-transition: $generic-hover-transition !default;
+
+// QLayout. Las marginales —`QHeader` y `QFooter`— vienen con fondo `$primary` y
+// texto blanco. Se corrigen aca para que salgan con los colores del sitio sin
+// tener que pasarles clases en cada layout. El borde de `bordered` ya sale bien:
+// `$layout-border` usa `$separator-color`, que arriba es nuestro color de linea.
+$layout-marginal-background: var(--q-background) !default;
+$layout-marginal-color: var(--q-content) !default;
+
+// QField. El `outlined` de Quasar mide 56px y ese gana sobre los 48 de la
+// maqueta: es mas comodo al tacto y evita pelearse con el CSS del framework.
+$field-label-font-size: 16px !default;
+$field-bottom-font-size: 12px !default;

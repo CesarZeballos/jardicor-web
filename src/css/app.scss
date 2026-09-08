@@ -1,0 +1,934 @@
+@import 'quasar.variables';
+
+/***************************************/
+/*          COLOR                      */
+/***************************************/
+/* Cada clase emite `var(--q-clave, #fallback)`: el fallback es el valor claro y
+   la variable es lo que redefine `.inv` para dar vuelta un panel entero.
+   Texto y fondo llevan `!important` para comportarse igual que las clases de
+   color de Quasar (`.text-primary`, `.bg-dark`), que tambien lo llevan. */
+/* Las claves propias se publican como custom properties igual que hace Quasar con
+   las suyas en `core/colors.sass`. Asi `var(--q-background)` funciona en cualquier
+   lado —incluso dentro de una variable de Quasar— y `.inv` solo tiene que
+   redefinirlas. */
+:root {
+  @each $key, $value in $custom-colors {
+    --q-#{$key}: #{$value};
+  }
+}
+
+@each $key, $value in $custom-colors {
+  .text-#{$key} {
+    color: var(--q-#{$key}, #{$value}) !important;
+  }
+  .bg-#{$key} {
+    background-color: var(--q-#{$key}, #{$value}) !important;
+  }
+  .border-#{$key} {
+    border: $stroke-thin solid var(--q-#{$key}, #{$value});
+  }
+  .border-top-#{$key} {
+    border-top: $stroke-thin solid var(--q-#{$key}, #{$value});
+  }
+  .border-bottom-#{$key} {
+    border-bottom: $stroke-thin solid var(--q-#{$key}, #{$value});
+  }
+  .border-left-#{$key} {
+    border-left: $stroke-thin solid var(--q-#{$key}, #{$value});
+  }
+}
+
+/* Modificador de grosor: se combina con cualquier `.border-*`. Va DESPUES del
+   bucle a proposito — las clases de color declaran el atajo `border`, que
+   incluye el ancho, asi que solo lo pisa una regla posterior de la misma
+   especificidad. Una sola clase en vez de generar la variante gruesa de los doce
+   colores. */
+.border-thick {
+  border-width: $stroke-thick;
+}
+
+/* Inversion. Redefine las mismas claves y se pinta a si misma, asi un panel
+   oscuro es una sola clase en el markup y nada de adentro necesita saberlo. */
+.inv {
+  @each $key, $value in $inverted-colors {
+    --q-#{$key}: #{$value};
+  }
+
+  background-color: var(--q-background);
+  color: var(--q-content);
+}
+
+@each $key, $value in $radii {
+  .border-radius-#{$key} {
+    border-radius: $value;
+  }
+}
+
+/***************************************/
+/*          BASE                       */
+/***************************************/
+body {
+  background-color: var(--q-background, map-get($custom-colors, background));
+  color: var(--q-content, map-get($custom-colors, content));
+}
+
+/* Quasar le da a `p` un margen inferior de 16px y el navegador le da uno a las
+   listas. El layout de este sitio separa con `gap` y con las clases `q-mt-*` /
+   `q-mb-*`, asi que los dos mecanismos se pelearian.
+   Va con selector de etiqueta a proposito: cualquier clase de utilidad le gana. */
+p,
+ul,
+ol {
+  margin: 0;
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+/* Superficies del navegador: seleccion, cursor, placeholder, barra de scroll y
+   anillo de foco no pertenecen a ningun sistema de diseno hasta que se las pinta. */
+:root {
+  color-scheme: light;
+  accent-color: $primary;
+}
+
+::selection {
+  background: map-get($custom-colors, green-200);
+  color: map-get($custom-colors, green-900);
+}
+
+.inv ::selection {
+  background: map-get($custom-colors, green-400);
+  color: map-get($custom-colors, cream-50);
+}
+
+html {
+  scrollbar-color: map-get($custom-colors, green-400)
+    map-get($custom-colors, cream-50);
+  scrollbar-width: thin;
+}
+
+input,
+select,
+textarea {
+  caret-color: $accent;
+}
+
+::placeholder {
+  color: var(--q-content-soft, map-get($custom-colors, content-soft));
+  opacity: 1;
+}
+
+:focus-visible {
+  outline: $stroke-focus solid var(--q-focus, map-get($custom-colors, focus));
+  outline-offset: 2px;
+}
+
+/* La escala de los encabezados sale de `$h1`..`$h6`; Quasar no setea la familia,
+   asi que la voz de marca se aplica aca, una sola vez. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-family: $display-font-family;
+}
+
+.text-h1,
+.text-h2,
+.text-h3,
+.text-h4,
+.text-h5,
+.text-h6 {
+  font-family: $display-font-family;
+}
+
+/***************************************/
+/*          LAYOUT                     */
+/***************************************/
+/* `<q-page padding>` aplica esta clase. Quasar la trae con 8 / 16 / 24px, que es
+   el aire de una pantalla de aplicacion; este es un sitio de contenido y su ritmo
+   vertical es de 96 a 128px. Se redefine a la escala del sitio manteniendo el
+   mecanismo: sigue siendo responsive por breakpoint.
+   Solo vertical: el margen lateral lo pone `.wrapper`. */
+.q-layout-padding {
+  @media (max-width: $breakpoint-xs-max) {
+    padding: map-get($space-2xl, y) 0 map-get($space-3xl, y);
+  }
+
+  @media (min-width: $breakpoint-sm-min) {
+    padding: map-get($space-4xl, y) 0 map-get($space-5xl, y);
+  }
+}
+
+/* La calle del sitio. Es lo unico de layout que Quasar no tiene: no hay clase de
+   contenedor con ancho maximo y centrado. El padding va aca y no como
+   `q-px-lg q-px-md-xl` en el markup porque se repetiria en las quince secciones
+   que la usan. */
+.wrapper {
+  max-width: $content-width;
+  margin: 0 auto;
+  padding: 0 map-get($space-lg, x);
+
+  @media (min-width: $breakpoint-sm-min) {
+    padding: 0 map-get($space-xl, x);
+  }
+}
+
+/* Medida de lectura del sitio (entre 60 y 75 caracteres). Va como clase y no como
+   `style` porque no es una medida de una sola vez: la usan las ocho intros de
+   seccion y las bajadas largas. Los `max-width` que aparecen una unica vez si van
+   inline, al lado del markup que los necesita. */
+.measure {
+  max-width: $text-width;
+}
+
+/* Primer tabulable de la pagina, visible solo al enfocarlo (WCAG 2.4.1).
+   `fixed` y no `absolute`: tiene que aparecer en pantalla aunque la pagina este
+   scrolleada. Y un escalon por encima de `$z-marginals`, que es el z-index de la
+   cabecera: comparten valor y, al ir la cabecera despues en el DOM, lo tapaba. */
+.skip-link {
+  position: fixed;
+  left: map-get($space-md, x);
+  top: -100px;
+  z-index: $z-marginals + 1;
+  background-color: var(--q-primary);
+  color: var(--q-on-action, map-get($custom-colors, on-action));
+  padding: map-get($space-sm, y) map-get($space-md, x);
+  border-radius: $generic-border-radius;
+  text-decoration: none;
+  font-size: map-get($body2, size);
+  font-weight: 500;
+  transition: top 160ms ease;
+
+  &:focus {
+    top: map-get($space-md, y);
+  }
+}
+
+/* Se ve en pantalla a proposito: es un recordatorio de produccion, no un estilo. */
+.pending {
+  border: 1px dashed var(--q-accent, $accent);
+  border-radius: $generic-border-radius;
+  padding: 2px 8px;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--q-content-soft, map-get($custom-colors, content-soft));
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/***************************************/
+/*          SEPARACIONES CON GAP       */
+/***************************************/
+/* Quasar no tiene una utilidad de `gap`: su `q-gutter-*` es anterior a flex gap y
+   trabaja con margenes negativos en el contenedor, asi que en una caja con borde o
+   con padding —la tarjeta de contacto, un paso con su filete— tira el contenido
+   hacia arriba. Donde el diseno separa con `gap`, la regla va aca; la direccion y
+   la alineacion siguen saliendo de `row` / `column` / `items-*`.
+   Los valores salen del mismo mapa `$spaces` que las clases. */
+.brand__mark,
+.step__header {
+  gap: map-get($space-md, x);
+}
+
+.navbar__nav {
+  gap: map-get($space-lg, x);
+}
+
+.step,
+.contact-card__data {
+  gap: map-get($space-md, y);
+}
+
+.footer ul {
+  gap: map-get($space-sm, y);
+}
+
+.contact-card {
+  gap: map-get($space-xl, y);
+}
+
+/***************************************/
+/*          MARCA                      */
+/***************************************/
+/* Solo el reset del enlace: la disposicion la ponen `row items-center`. */
+.brand {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Tipografia de marca: dos tamanos fijos con tracking propio, fuera de la escala. */
+.brand__name {
+  display: block;
+  font-family: $display-font-family;
+  font-weight: 600;
+  font-size: 21px;
+  letter-spacing: 0.1em;
+  line-height: 1;
+}
+
+.brand__tagline {
+  display: block;
+  font-family: $display-font-family;
+  font-weight: 500;
+  font-size: 8.5px;
+  letter-spacing: 0.2em;
+  line-height: 1;
+  margin-top: 3px;
+  color: var(--q-content-soft, map-get($custom-colors, content-soft));
+}
+
+/***************************************/
+/*          NAVBAR                     */
+/***************************************/
+.navbar__row {
+  height: 84px;
+}
+
+/* `.navbar__nav a` (0,1,1) le gana a `.q-btn` (0,1,0) y le pisaba el color al CTA,
+   dejandolo verde sobre verde. De ahi el `:not`. */
+.navbar__nav a:not(.q-btn) {
+  color: var(--q-content, map-get($custom-colors, content));
+  text-decoration: none;
+  font-size: map-get($body2, size);
+  font-weight: 500;
+  padding: map-get($space-sm, y) 0;
+
+  &:hover {
+    color: var(--q-content-soft, map-get($custom-colors, content-soft));
+  }
+}
+
+/* Desplegable sin JavaScript: se abre por hover y por foco, asi que funciona con
+   teclado y esta en el HTML inicial. */
+.navbar__group {
+  position: relative;
+}
+
+.navbar__submenu {
+  position: absolute;
+  top: 100%;
+  left: calc(#{map-get($space-md, x)} * -1);
+  min-width: 17rem;
+  border-radius: map-get($radii, md);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease,
+    visibility 160ms;
+
+  a {
+    display: block;
+    padding: map-get($space-sm, y) map-get($space-md, x);
+
+    &:hover {
+      background-color: map-get($custom-colors, green-100);
+      color: var(--q-content, map-get($custom-colors, content));
+    }
+  }
+}
+
+.navbar__group:hover .navbar__submenu,
+.navbar__group:focus-within .navbar__submenu {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.mobile-menu a:not(.q-btn) {
+  display: block;
+  padding: map-get($space-sm, y) 0;
+  color: var(--q-content, map-get($custom-colors, content));
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.mobile-menu__child a:not(.q-btn) {
+  padding-left: map-get($space-md, x);
+  font-weight: 400;
+  font-size: map-get($body2, size);
+  color: var(--q-content-soft, map-get($custom-colors, content-soft));
+}
+
+/***************************************/
+/*          HERO                       */
+/***************************************/
+/* Grilla asimetrica: 52,5% / 47,5%. La grilla de doce columnas de Quasar solo
+   llega a 50/50, y `stretch` hace que la foto tome el alto de la columna de texto
+   en vez de definirlo con su propia proporcion. */
+.hero__grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: map-get($space-3xl, x);
+  align-items: stretch;
+}
+
+/***************************************/
+/*          SLOT DE FOTO               */
+/***************************************/
+.photo-slot__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: map-get($radii, md);
+  display: block;
+}
+
+/* Slot deliberado, no una imagen de banco que despues hay que arrancar. */
+.photo-slot {
+  position: relative;
+  border-radius: map-get($radii, md);
+  overflow: hidden;
+
+  /* Velo para que la nota no se lea encima de las curvas. */
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 60%;
+    background: linear-gradient(
+      to top,
+      map-get($custom-colors, green-900) 15%,
+      transparent
+    );
+  }
+}
+
+.photo-slot__pattern {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.55;
+
+  path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.25;
+  }
+}
+
+.photo-slot__note {
+  position: relative;
+  z-index: 1;
+  line-height: 1.5;
+}
+
+/***************************************/
+/*          SERVICIOS                  */
+/***************************************/
+/* Indice de filas, no grilla de tarjetas. Son seis destinos clickeables, asi que
+   se comportan como un indice. El verde no tine un recuadro: recorre la fila
+   entera de lado a lado, que es un gesto mas grande con el mismo mecanismo. */
+.service-row {
+  display: grid;
+  grid-template-columns: 40px minmax(14rem, 20rem) minmax(0, 1fr) 24px;
+  align-items: center;
+  gap: map-get($space-lg, x);
+  text-decoration: none;
+  color: inherit;
+  transition: background-color 240ms cubic-bezier(0.22, 1, 0.36, 1);
+
+  &:focus-visible {
+    outline: $stroke-focus solid var(--q-focus, map-get($custom-colors, focus));
+    outline-offset: -3px;
+  }
+
+  h3 {
+    transform-origin: left center;
+    transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+
+.service-row__icon {
+  width: 40px;
+  height: 40px;
+  color: var(--q-accent, $accent);
+  transform-origin: left center;
+  transition:
+    color 240ms ease,
+    transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.service-row__arrow {
+  width: 24px;
+  height: 24px;
+  color: var(--q-accent, $accent);
+  justify-self: end;
+  transition:
+    color 240ms ease,
+    transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.service-row:hover .service-row__arrow {
+  transform: translateX(5px);
+}
+
+/* El verde viaja: la primera fila arranca marcada y al recorrer la lista el verde
+   la sigue. */
+.services > .service-row:first-child {
+  background-color: map-get($custom-colors, green-100);
+
+  .service-row__icon,
+  .service-row__arrow {
+    color: var(--q-content, map-get($custom-colors, content));
+  }
+}
+
+/* El hover corre por igual en las filas que enlazan y en las que no: es la
+   coreografia de la seccion, no una promesa de que se pueda hacer clic. Eso lo
+   dice la flecha, que solo aparece cuando la fila lleva a algun lado. */
+@media (hover: hover) {
+  .services > .service-row:hover,
+  .services > .service-row:focus-visible {
+    background-color: map-get($custom-colors, green-100);
+
+    .service-row__icon,
+    .service-row__arrow {
+      color: var(--q-content, map-get($custom-colors, content));
+    }
+
+    .service-row__icon {
+      transform: scale(1.18);
+    }
+
+    h3 {
+      transform: scale(1.05);
+    }
+  }
+
+  /* Al entrar a la lista, la primera suelta el verde — salvo que sea la apuntada. */
+  .services:is(:hover, :focus-within)
+    > .service-row:first-child:not(:hover):not(:focus-visible) {
+    background-color: transparent;
+
+    .service-row__icon,
+    .service-row__arrow {
+      color: var(--q-accent, $accent);
+    }
+  }
+}
+
+/***************************************/
+/*          SECTORES                   */
+/***************************************/
+.sector__icon {
+  width: 32px;
+  height: 32px;
+  display: block;
+  color: var(--q-accent, $accent);
+}
+
+/***************************************/
+/*          COBERTURA                  */
+/***************************************/
+/* La trama topografica vuelve aca, y no como adorno: son curvas de nivel
+   presentando la seccion de terreno. Segunda y ultima aparicion del motivo. */
+.coverage__seam {
+  display: block;
+  width: 100%;
+  height: 90px;
+  color: var(--q-accent, $accent);
+  opacity: 0.65;
+
+  path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.25;
+  }
+
+  @media (min-width: $breakpoint-sm-min) {
+    height: 140px;
+  }
+}
+
+/* Esquema, no mapa geografico. Las etiquetas son texto real dentro del SVG
+   —nunca trazado— para que Google las lea. */
+.coverage__map {
+  width: 100%;
+  height: auto;
+  display: block;
+  font-family: $typography-font-family;
+
+  text {
+    fill: var(--q-content, map-get($custom-colors, content));
+  }
+
+  .ring {
+    fill: none;
+    stroke: var(--q-line, map-get($custom-colors, line));
+    stroke-width: 2;
+  }
+
+  .ring--north {
+    stroke: var(--q-accent, $accent);
+    stroke-width: 3;
+  }
+
+  .corridor {
+    fill: none;
+    stroke: var(--q-accent, $accent);
+    stroke-width: 2;
+    stroke-dasharray: 6 6;
+  }
+
+  .node {
+    fill: var(--q-background, map-get($custom-colors, background));
+    stroke: var(--q-content, map-get($custom-colors, content));
+    stroke-width: 2.5;
+  }
+
+  .node--focus {
+    fill: var(--q-content, map-get($custom-colors, content));
+  }
+
+  .area {
+    font-size: 17px;
+    font-weight: 600;
+  }
+
+  .segment {
+    font-size: 13.5px;
+    fill: var(--q-content-soft, map-get($custom-colors, content-soft));
+  }
+
+  .city {
+    font-size: 13px;
+    font-weight: 500;
+    fill: var(--q-content-soft, map-get($custom-colors, content-soft));
+    letter-spacing: 0.08em;
+  }
+}
+
+/***************************************/
+/*          PROCESO                    */
+/***************************************/
+/* Una via, no cuatro cajas. El filete superior corre a lo largo de los cuatro
+   pasos y se segmenta: la secuencia se lee en la linea, no en el contorno de una
+   tarjeta. El paso 1 conserva el ancho extra porque tiene el doble de texto. */
+.steps {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: map-get($space-2xl, x);
+}
+
+.step {
+  border-top: 2px solid var(--q-line, map-get($custom-colors, line));
+  transition: border-color 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Reserva dos lineas para que los cuatro titulos arranquen el parrafo a la misma
+   altura, tengan una linea o dos. */
+.step__header h3 {
+  min-height: calc(2 * #{map-get($h4, line-height)} * #{map-get($h4, size)});
+  transform-origin: left center;
+  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.step__number {
+  font-family: $display-font-family;
+  font-weight: 600;
+  font-size: 2rem;
+  line-height: 1;
+  /* El titulo reparte su interlineado arriba y abajo del texto; el numero, con
+     `line-height: 1`, no tiene nada arriba. Sin esta mitad de interlineado el
+     numero arranca mas alto que el titulo que tiene al lado. Sale de las
+     variables de `$h4`, que es la escala del titulo: si cambia una, cambia esto. */
+  padding-top: calc(
+    #{map-get($h4, size)} * (#{map-get($h4, line-height)} - 1) / 2
+  );
+  color: var(--q-accent, $accent);
+  font-variant-numeric: tabular-nums;
+  flex: none;
+  display: inline-block;
+  transform-origin: left baseline;
+  transition:
+    color 240ms ease,
+    transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* El verde viaja: en Servicios tine la fila entera, aca enciende el tramo de la via. */
+.steps > .step:first-child {
+  border-top-color: var(--q-content, map-get($custom-colors, content));
+
+  .step__number {
+    color: var(--q-content, map-get($custom-colors, content));
+  }
+}
+
+@media (hover: hover) {
+  .steps > .step:hover {
+    border-top-color: var(--q-content, map-get($custom-colors, content));
+
+    .step__number {
+      color: var(--q-content, map-get($custom-colors, content));
+      transform: scale(1.22);
+    }
+
+    .step__header h3 {
+      transform: scale(1.05);
+    }
+  }
+
+  .steps:hover > .step:first-child:not(:hover) {
+    border-top-color: var(--q-line, map-get($custom-colors, line));
+
+    .step__number {
+      color: var(--q-accent, $accent);
+    }
+  }
+}
+
+/***************************************/
+/*          FAQ                        */
+/***************************************/
+.faq summary {
+  cursor: pointer;
+  list-style: none;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+
+  &:focus-visible {
+    outline: $stroke-focus solid var(--q-focus, map-get($custom-colors, focus));
+    outline-offset: 3px;
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
+    flex: none;
+    color: var(--q-accent, $accent);
+    transition: transform 200ms ease;
+  }
+}
+
+.faq details[open] summary svg {
+  transform: rotate(180deg);
+}
+
+/***************************************/
+/*          CONTACTO                   */
+/***************************************/
+.contact__grid {
+  display: grid;
+  grid-template-columns: 0.78fr 1.22fr;
+  gap: map-get($space-3xl, x);
+  align-items: stretch;
+}
+
+.contact-card {
+  border-radius: map-get($radii, md);
+}
+
+.contact-card__data {
+  a,
+  span {
+    color: var(--q-content);
+    text-decoration: none;
+    font-size: map-get($body2, size);
+    overflow-wrap: anywhere;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  svg {
+    width: 18px;
+    height: 18px;
+    flex: none;
+    color: var(--q-accent, $accent);
+  }
+}
+
+.contact-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: map-get($space-sm, y) map-get($space-md, x);
+}
+
+.contact-form__wide,
+.contact-form__footer {
+  grid-column: span 2;
+}
+
+/***************************************/
+/*          PIE                        */
+/***************************************/
+.footer {
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  a {
+    color: var(--q-content);
+    text-decoration: none;
+    font-size: map-get($body2, size);
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.footer__grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr 1fr;
+  gap: map-get($space-2xl, x);
+}
+
+/***************************************/
+/*          CAMPOS DE QUASAR           */
+/***************************************/
+/* Los campos van con `dark` porque viven sobre el panel invertido. Eso activa el
+   borde propio del modo oscuro de Quasar —blanco al 60%—, que no es el del
+   sistema. Estas reglas lo devuelven a los tokens.
+   Van con `.q-field--dark` en el selector, no solo con `.q-field--outlined`:
+   empatan en especificidad y Quasar declara el suyo despues. */
+/* El `:not(.q-field--error)` no es adorno: sin el, estas reglas le pisan el color
+   al campo con error, que es el unico estado donde el borde tiene que gritar. */
+.q-field--outlined:not(.q-field--error) .q-field__control:before,
+.q-field--dark:not(.q-field--error) .q-field__control:before {
+  border-color: var(--q-line-strong, map-get($custom-colors, line-strong));
+}
+
+.q-field--outlined:not(.q-field--error) .q-field__control:hover:before,
+.q-field--dark:not(.q-field--error) .q-field__control:hover:before {
+  border-color: var(--q-accent, $accent);
+}
+
+.q-field--outlined.q-field--highlighted:not(.q-field--error)
+  .q-field__control:after {
+  border-color: var(--q-accent, $accent);
+}
+
+/* El error se pinta con el negativo del sistema, que bajo `.inv` es el salmon
+   claro: sobre el panel verde oscuro, el rojo de marca no se lee. Va en el borde
+   de reposo y en el anillo de foco, para que no cambie de color al enfocarlo. */
+.q-field--error .q-field__control:before,
+.q-field--dark.q-field--error .q-field__control:before,
+.q-field--dark.q-field--error.q-field--highlighted .q-field__control:before,
+.q-field--error.q-field--highlighted .q-field__control:after {
+  border-color: var(--q-negative);
+}
+
+.q-field__native,
+.q-field__input {
+  font-family: $typography-font-family;
+}
+
+/***************************************/
+/*          RESPONSIVE                 */
+/***************************************/
+/* Solo lo que las clases no cubren: las cuatro grillas asimetricas. El resto de
+   lo responsive —espaciado, tamanos de titulo, visibilidad, columnas— sale de las
+   clases de Quasar y de los `clamp()` de `quasar.variables.scss`. */
+@media (max-width: $breakpoint-sm-max) {
+  .hero__grid {
+    grid-template-columns: 1fr;
+    gap: map-get($space-2xl, y);
+  }
+
+  /* En una sola columna la foto ya no tiene un alto que igualar: vuelve a su
+     propia proporcion. */
+  .hero__grid .photo-slot {
+    aspect-ratio: 4 / 3;
+  }
+
+  .service-row {
+    grid-template-columns: 40px minmax(0, 1fr) 24px;
+    row-gap: map-get($space-sm, y);
+  }
+
+  .service-row__icon {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .service-row h3 {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .service-row__arrow {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .service-row p {
+    grid-column: 2 / -1;
+    grid-row: 2;
+  }
+
+  .steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .contact__grid {
+    grid-template-columns: 1fr;
+    gap: map-get($space-2xl, y);
+  }
+
+  .footer__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: $breakpoint-xs-max) {
+  .service-row {
+    grid-template-columns: 32px minmax(0, 1fr) 20px;
+  }
+
+  .steps,
+  .footer__grid,
+  .contact-form {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-form__wide,
+  .contact-form__footer {
+    grid-column: span 1;
+  }
+}
+
+/* Alternativa intencional, no un apagon. El cambio de color se conserva porque es
+   feedback de estado; lo que se elimina es el desplazamiento, la escala y la
+   rotacion, que es lo que marea. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  .service-row__arrow,
+  .service-row__icon,
+  .service-row h3,
+  .step__header h3,
+  .step__number {
+    transform: none !important;
+  }
+
+  .service-row__icon,
+  .step__number {
+    transition: color 240ms ease !important;
+  }
+
+  .faq summary svg {
+    transition: none;
+  }
+}
