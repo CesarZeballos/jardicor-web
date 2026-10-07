@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import ContactService, {
   PHONE_PREFIX,
   SurveyRequest,
 } from 'src/services/ContactService';
 import useToast, { ToastAction } from 'src/composables/useToast';
 import useWhatsapp from 'src/composables/useWhatsapp';
+import useAnalytics from 'src/composables/useAnalytics';
+import { thankYouPage } from 'src/content/pages';
 import {
   completePhone,
   requiredField,
@@ -41,7 +44,9 @@ const fieldProps = {
   noErrorIcon: true,
 } as const;
 
-const { showSuccessToast, showErrorToast } = useToast();
+const router = useRouter();
+const { showErrorToast } = useToast();
+const { trackEvent } = useAnalytics();
 const { buildWhatsappLink } = useWhatsapp();
 
 const sending = ref(false);
@@ -51,9 +56,12 @@ async function onSubmit(): Promise<void> {
   const result = await ContactService.submitInquiry({ ...request });
   sending.value = false;
 
+  // La conversion se cuenta aca, con el OK de Web3Forms, y una sola vez por
+  // envio: `/gracias` no dispara nada al cargar.
   if (result.status === 'sent') {
-    showSuccessToast(result.message);
+    trackEvent('generate_lead');
     Object.assign(request, emptyRequest);
+    await router.push(thankYouPage.path);
     return;
   }
 

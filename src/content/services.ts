@@ -93,7 +93,7 @@ export const services: Service[] = [
     meta: {
       title: 'Gaviones, adoquinado y nivelación de terreno | Jardicor',
       description:
-        'Gaviones, muros de contención, adoquinado, losetas cribadas, nivelación y movimiento de suelo dentro del mismo contrato de mantenimiento.',
+        'Gaviones, muros de contención, adoquinado, losetas cribadas, nivelación y movimiento de suelo en Córdoba, dentro del mismo contrato de mantenimiento.',
       path: '/servicios/infraestructura-complementaria',
       priority: 0.6,
     },

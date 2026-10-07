@@ -17,22 +17,23 @@ export const BUSINESS_ID = `${site.origin}/#jardicor`;
 export default function useJsonLd() {
   /**
    * PENDIENTE DEL CLIENTE: faltan razon social, CUIT y domicilio verificable para
-   * completar el bloque (`legalName`, `address`, `taxID`).
+   * completar el bloque (`legalName`, `address`, `taxID`). El domicilio se carga
+   * en `site.address`; mientras sea `null`, el bloque sale sin `address`.
    */
   function localBusiness(): LocalBusinessJsonLd {
-    return {
+    const node: LocalBusinessJsonLd = {
       '@type': 'LocalBusiness',
       '@id': BUSINESS_ID,
       name: site.name,
       description:
         'Mantenimiento y parquización de espacios verdes para empresas, consorcios y predios industriales en Córdoba.',
       url: `${site.origin}/`,
+      logo: `${site.origin}${site.logo}`,
       telephone: site.contact.phone.replace(/\s/g, ''),
       email: site.contact.email,
       areaServed: [
-        { '@type': 'City', name: 'Córdoba' },
+        { '@type': 'City', name: 'Córdoba Capital' },
         { '@type': 'Place', name: 'Zona norte de Córdoba' },
-        { '@type': 'Place', name: 'Villa Allende' },
       ],
       knowsAbout: [
         'Mantenimiento de espacios verdes',
@@ -42,6 +43,16 @@ export default function useJsonLd() {
       ],
       sameAs: [site.contact.instagramUrl],
     };
+
+    if (site.address) {
+      node.address = {
+        '@type': 'PostalAddress',
+        ...site.address,
+        addressCountry: 'AR',
+      };
+    }
+
+    return node;
   }
 
   /**

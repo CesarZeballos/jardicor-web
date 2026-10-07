@@ -38,7 +38,7 @@ export const sectors: Sector[] = [
     meta: {
       title: 'Mantenimiento para barrios cerrados en Córdoba | Jardicor',
       description:
-        'Mantenimiento de espacios comunes en barrios cerrados y desarrollos de Córdoba: grandes superficies, uso intensivo y frecuencia programada.',
+        'Mantenimiento de espacios comunes en barrios cerrados y desarrollos de Córdoba: grandes superficies, uso intensivo, frecuencia programada y alcance por escrito.',
       path: '/sectores/barrios-cerrados-y-desarrollos',
       priority: 0.7,
     },
@@ -54,7 +54,7 @@ export const sectors: Sector[] = [
     meta: {
       title: 'Mantenimiento para parques industriales en Córdoba | Jardicor',
       description:
-        'Mantenimiento de perímetros, accesos, banquinas y franjas de control en parques industriales y predios logísticos de Córdoba.',
+        'Mantenimiento de perímetros, accesos, banquinas y franjas de control en parques industriales y predios logísticos de Córdoba, con frecuencia programada.',
       path: '/sectores/parques-industriales',
       priority: 0.7,
     },
@@ -86,7 +86,7 @@ export const sectors: Sector[] = [
     meta: {
       title: 'Mantenimiento para municipios y comunas | Jardicor',
       description:
-        'Mantenimiento de plazas, parques, ingresos y predios públicos para municipios y comunas de la provincia de Córdoba.',
+        'Mantenimiento de plazas, parques, ingresos y predios públicos para municipios y comunas de la provincia de Córdoba, con cuadrillas propias y alcance definido.',
       path: '/sectores/municipios-y-comunas',
       priority: 0.7,
     },

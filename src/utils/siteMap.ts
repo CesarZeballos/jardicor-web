@@ -1,6 +1,6 @@
 import { PageMeta } from '../commons/interfaces/content';
 import { homeMeta } from '../content/home';
-import { simplePages } from '../content/pages';
+import { simplePages, thankYouPage } from '../content/pages';
 import { services } from '../content/services';
 import { sectors } from '../content/sectors';
 
@@ -24,7 +24,12 @@ export const indexablePages: PageMeta[] = [
   ...sectors.filter((sector) => sector.active).map((sector) => sector.meta),
 ];
 
-/** Rutas que el build tiene que prerenderizar, en orden. */
-export const prerenderedRoutes: string[] = indexablePages.map(
-  (page) => page.path,
-);
+/**
+ * Rutas que el build tiene que prerenderizar, en orden. Incluye `/gracias`, que
+ * se genera con `noindex` pero no entra al sitemap: el sitemap lee
+ * `indexablePages`, no esta lista.
+ */
+export const prerenderedRoutes: string[] = [
+  ...indexablePages.map((page) => page.path),
+  thankYouPage.path,
+];

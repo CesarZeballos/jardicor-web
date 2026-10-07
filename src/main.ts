@@ -11,10 +11,11 @@ import App from './App.vue';
 import routerOptions from './router';
 import { BootCallback } from './boot';
 import quasarBoot from './boot/00-quasar';
+import analyticsBoot from './boot/01-analytics';
 
 /** Orden de ejecucion de los boot files. Importa: correr uno antes que otro cambia
  *  que tiene disponible el siguiente. */
-const bootFiles: BootCallback[] = [quasarBoot];
+const bootFiles: BootCallback[] = [quasarBoot, analyticsBoot];
 
 export const createApp = ViteSSG(
   App,

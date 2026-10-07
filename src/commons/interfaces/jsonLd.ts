@@ -8,14 +8,26 @@ export interface PlaceJsonLd {
   name: string;
 }
 
+export interface PostalAddressJsonLd {
+  '@type': 'PostalAddress';
+  streetAddress: string;
+  addressLocality: string;
+  addressRegion: string;
+  postalCode: string;
+  addressCountry: 'AR';
+}
+
 export interface LocalBusinessJsonLd {
   '@type': 'LocalBusiness';
   '@id': string;
   name: string;
   description: string;
   url: string;
+  logo: string;
   telephone: string;
   email: string;
+  /** Solo se emite cuando hay un domicilio real cargado en `content/site.ts`. */
+  address?: PostalAddressJsonLd;
   areaServed: PlaceJsonLd[];
   knowsAbout: string[];
   sameAs: string[];

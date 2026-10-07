@@ -11,12 +11,32 @@ export interface ContactData {
   serviceArea: string;
 }
 
+/** Domicilio verificable del negocio, tal como lo pide `PostalAddress` de schema.org. */
+export interface BusinessAddress {
+  streetAddress: string;
+  addressLocality: string;
+  addressRegion: string;
+  postalCode: string;
+}
+
 export interface SiteData {
   name: string;
   tagline: string;
   shortDescription: string;
-  /** Origen sin barra final. Se usa para canonical, Open Graph y sitemap. */
+  /**
+   * Origen sin barra final. Sale de `VITE_SITE_URL` y se usa para canonical,
+   * Open Graph y JSON-LD. El sitemap lo lee aparte, desde `vite.config.ts`.
+   */
   origin: string;
+  /** Imagen de Open Graph (1200x630), ruta absoluta dentro de `public/`. */
+  ogImage: string;
+  /** Logo del negocio para el JSON-LD, ruta absoluta dentro de `public/`. */
+  logo: string;
+  /**
+   * Domicilio para el JSON-LD de `LocalBusiness`. `null` mientras no haya un dato
+   * real: el bloque se emite sin `address` en vez de con un valor de ejemplo.
+   */
+  address: BusinessAddress | null;
   contact: ContactData;
   /**
    * Numero de WhatsApp en formato internacional sin signos, para `wa.me`.
@@ -32,4 +52,9 @@ export interface SiteData {
    * el formulario valida pero no envia.
    */
   web3formsKey: string;
+  /**
+   * ID de medicion de GA4. Sale de `VITE_GA_ID`. Si la variable no esta, no se
+   * carga `gtag.js` y los eventos de conversion no hacen nada.
+   */
+  gaId: string;
 }

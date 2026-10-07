@@ -1,4 +1,4 @@
-import { SimplePage } from '../commons/interfaces/content';
+import { NoIndexPage, SimplePage } from '../commons/interfaces/content';
 
 /**
  * Paginas secundarias que todavia no tienen diseno: por ahora solo su H1, su
@@ -15,7 +15,7 @@ export const servicesPage: SimplePage = {
   meta: {
     title: 'Servicios de espacios verdes en Córdoba | Jardicor',
     description:
-      'Mantenimiento, parquización, riego, poda e infraestructura complementaria para empresas, consorcios y predios industriales en Córdoba.',
+      'Mantenimiento, parquización, riego, poda e infraestructura complementaria para empresas, consorcios y predios industriales en Córdoba Capital y zona norte.',
     path: '/servicios',
     priority: 0.8,
   },
@@ -28,7 +28,7 @@ export const worksPage: SimplePage = {
   meta: {
     title: 'Trabajos realizados | Jardicor',
     description:
-      'Predios, barrios cerrados y espacios corporativos donde Jardicor ejecuta mantenimiento y obra verde en Córdoba.',
+      'Predios industriales, barrios cerrados y espacios corporativos donde Jardicor ejecuta mantenimiento y obra verde en Córdoba, con alcance definido por contrato.',
     path: '/trabajos',
     priority: 0.5,
   },
@@ -43,7 +43,7 @@ export const aboutPage: SimplePage = {
   meta: {
     title: 'Quiénes somos | Jardicor · Constructora Verde',
     description:
-      'Jardicor gestiona, construye y mantiene espacios verdes para empresas, consorcios y predios industriales en la zona norte de Córdoba.',
+      'Jardicor gestiona, construye y mantiene espacios verdes para empresas, consorcios y predios industriales en la zona norte de Córdoba, con cuadrillas propias.',
     path: '/nosotros',
     priority: 0.5,
   },
@@ -56,7 +56,7 @@ export const contactPage: SimplePage = {
   meta: {
     title: 'Contacto y relevamiento técnico | Jardicor',
     description:
-      'Contanos qué predio necesitás mantener y coordinamos una visita. El relevamiento no tiene costo y respondemos dentro del mismo día hábil.',
+      'Contanos qué predio necesitás mantener en Córdoba y coordinamos una visita. El relevamiento técnico no tiene costo y respondemos dentro del mismo día hábil.',
     path: '/contacto',
     priority: 0.7,
   },
@@ -69,3 +69,15 @@ export const simplePages: SimplePage[] = [
   aboutPage,
   contactPage,
 ];
+
+/**
+ * Destino del formulario despues de un envio confirmado por Web3Forms. No se
+ * indexa ni se enlaza: solo se llega enviando una consulta.
+ */
+export const thankYouPage: NoIndexPage = {
+  title: 'Consulta recibida | Jardicor',
+  path: '/gracias',
+  h1: 'Recibimos tu consulta',
+  lead: 'Respondemos dentro del mismo día hábil.',
+  homeLinkLabel: 'Volver al inicio',
+};

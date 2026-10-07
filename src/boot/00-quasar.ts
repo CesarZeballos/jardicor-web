@@ -8,9 +8,10 @@ interface QuasarSsrContext {
   res: { setHeader: () => void };
 }
 
-/** Opciones del install: solo la lista de plugins de Quasar que usa el sitio. */
+/** Opciones del install: los plugins de Quasar que usa el sitio y su configuracion. */
 interface QuasarOptions {
   plugins: { Notify: typeof Notify };
+  config: { lang: { noHtmlAttrs: boolean } };
 }
 
 type QuasarPlugin = Plugin<[QuasarOptions, QuasarSsrContext | undefined]>;
@@ -28,6 +29,9 @@ type QuasarPlugin = Plugin<[QuasarOptions, QuasarSsrContext | undefined]>;
  * propio servidor: escribe ahi los meta tags y lee el user-agent para detectar
  * plataforma. Como el HTML lo genera vite-ssg, le damos un contexto minimo —
  * nadie lo lee despues, solo evita que el install reviente.
+ *
+ * `noHtmlAttrs` evita que Quasar le ponga `lang="en-US"` al `<html>` al hidratar:
+ * el idioma del documento lo fija `MainLayout` con `useHead`.
  */
 export default boot(({ app, isClient }) => {
   const ssrContext: QuasarSsrContext | undefined = isClient
@@ -41,7 +45,7 @@ export default boot(({ app, isClient }) => {
   // servidor de SSR, que aca no existe.
   app.use(
     Quasar as unknown as QuasarPlugin,
-    { plugins: { Notify } },
+    { plugins: { Notify }, config: { lang: { noHtmlAttrs: true } } },
     ssrContext,
   );
 });

@@ -4,6 +4,7 @@ import {
   aboutPage,
   contactPage,
   servicesPage,
+  thankYouPage,
   worksPage,
 } from 'src/content/pages';
 import { activeServices } from 'src/content/services';
@@ -64,6 +65,11 @@ const routes: RouteRecordRaw[] = [
         },
       ]
     : []),
+  {
+    path: thankYouPage.path,
+    component: () => import('pages/thanks/ThankYouPage.vue'),
+    name: 'thank-you',
+  },
   {
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue'),

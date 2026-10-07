@@ -60,6 +60,19 @@ export interface SimplePage {
   active: boolean;
 }
 
+/**
+ * Pagina fuera del indice: se prerenderiza con `noindex` y no entra al sitemap
+ * ni a ningun enlace del sitio. Por eso no lleva `PageMeta`.
+ */
+export interface NoIndexPage {
+  title: string;
+  /** Ruta absoluta del sitio, con barra inicial y sin barra final. */
+  path: string;
+  h1: string;
+  lead: string;
+  homeLinkLabel: string;
+}
+
 export interface Pillar {
   title: string;
   text: string;

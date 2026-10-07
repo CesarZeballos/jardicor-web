@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useHead } from '@unhead/vue';
 import IconSpriteComponent from 'components/shared/IconSpriteComponent.vue';
 import NavbarComponent from 'components/shared/NavbarComponent.vue';
 // PRIMERA TANDA (landing): pie reducido. Volver a `FooterComponent` cuando
@@ -6,6 +7,10 @@ import NavbarComponent from 'components/shared/NavbarComponent.vue';
 import LandingFooterComponent from 'components/shared/LandingFooterComponent.vue';
 
 const HEADER_HEIGHT = 85;
+
+// Sin esto el prerender sale con `lang="en"`, el default de unhead en el
+// servidor: el atributo de `index.html` no sobrevive al render.
+useHead({ htmlAttrs: { lang: 'es-AR' } });
 </script>
 
 <template>
