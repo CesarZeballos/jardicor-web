@@ -29,6 +29,8 @@ export default function useJsonLd() {
         'Mantenimiento y parquización de espacios verdes para empresas, consorcios y predios industriales en Córdoba.',
       url: `${site.origin}/`,
       logo: `${site.origin}${site.logo}`,
+      // Provisoria: la imagen de Open Graph, hasta tener la foto real del hero.
+      image: `${site.origin}${site.ogImage}`,
       telephone: site.contact.phone.replace(/\s/g, ''),
       email: site.contact.email,
       areaServed: [

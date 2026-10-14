@@ -14,6 +14,14 @@ export function buildAbsoluteUrl(origin: string, path: string): string {
   return path.endsWith('/') ? `${origin}${path}` : `${origin}${path}/`;
 }
 
+/**
+ * Ruta sin barra final, en el formato de `PageMeta.path`. Hace falta para comparar
+ * contra `route.path`: Cloudflare sirve `/contacto/` y el router conserva la barra.
+ */
+export function normalizePath(path: string): string {
+  return path.replace(/\/+$/, '') || '/';
+}
+
 /** URL absoluta de una ruta del sitio, dentro de la aplicacion. */
 export function absoluteUrl(path: string): string {
   return buildAbsoluteUrl(site.origin, path);

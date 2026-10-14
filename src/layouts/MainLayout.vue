@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useHead } from '@unhead/vue';
 import IconSpriteComponent from 'components/shared/IconSpriteComponent.vue';
+import WhatsappFloatingButtonComponent from 'components/buttons/WhatsappFloatingButtonComponent.vue';
 import NavbarComponent from 'components/shared/NavbarComponent.vue';
 // PRIMERA TANDA (landing): pie reducido. Volver a `FooterComponent` cuando
 // entren las paginas de servicio, sector e institucionales.
@@ -26,5 +27,8 @@ useHead({ htmlAttrs: { lang: 'es-AR' } });
       <router-view />
     </q-page-container>
     <LandingFooterComponent />
+
+    <!-- Dentro de q-layout: QPageSticky se posiciona contra el layout. -->
+    <WhatsappFloatingButtonComponent />
   </q-layout>
 </template>

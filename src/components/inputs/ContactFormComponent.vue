@@ -8,6 +8,7 @@ import ContactService, {
 import useToast, { ToastAction } from 'src/composables/useToast';
 import useWhatsapp from 'src/composables/useWhatsapp';
 import useAnalytics from 'src/composables/useAnalytics';
+import PrivacyInfoComponent from 'components/shared/PrivacyInfoComponent.vue';
 import { thankYouPage } from 'src/content/pages';
 import {
   completePhone,
@@ -164,6 +165,7 @@ function buildFallbackActions(): ToastAction[] {
         no-caps
         data-event="form-submit"
       />
+      <PrivacyInfoComponent />
       <p class="text-body2 text-content-soft">
         Respondemos dentro del mismo día hábil.
       </p>

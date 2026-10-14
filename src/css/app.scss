@@ -418,6 +418,16 @@ h6 {
   }
 }
 
+/* Sin sombra, por sistema: el borde crema lo despega del fondo, sobre todo cuando
+   pasa por encima de un panel `.inv`. */
+.whatsapp-floating {
+  border: 2px solid map-get($custom-colors, cream-50);
+}
+
+.photo-slot__mark {
+  z-index: 1;
+}
+
 .photo-slot__note {
   position: relative;
   z-index: 1;

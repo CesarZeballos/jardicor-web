@@ -17,10 +17,13 @@ export interface SurveyRequest {
 export type SubmitStatus =
   'initial' | 'sending' | 'sent' | 'error' | 'not-configured';
 
-export interface SubmitResult {
-  status: SubmitStatus;
-  message: string;
-}
+/**
+ * El envio exitoso no trae mensaje: el formulario navega a `/gracias`, que es
+ * donde se le confirma al usuario que la consulta llego.
+ */
+export type SubmitResult =
+  | { status: 'sent' }
+  | { status: Exclude<SubmitStatus, 'sent'>; message: string };
 
 /**
  * Etiqueta de cada campo, en el orden en que se leen.
@@ -130,11 +133,7 @@ class ContactService {
         return API_ERROR_RESULT;
       }
 
-      return {
-        status: 'sent',
-        message:
-          'Recibimos tu consulta. Respondemos dentro del mismo día hábil.',
-      };
+      return { status: 'sent' };
     } catch {
       return {
         status: 'error',

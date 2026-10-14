@@ -24,6 +24,7 @@ export interface LocalBusinessJsonLd {
   description: string;
   url: string;
   logo: string;
+  image: string;
   telephone: string;
   email: string;
   /** Solo se emite cuando hay un domicilio real cargado en `content/site.ts`. */

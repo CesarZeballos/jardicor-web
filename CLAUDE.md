@@ -297,17 +297,26 @@ el `hover` — no hay ninguna que pise un tamaño de fuente ni un escalón de es
 
 ## Pendientes que bloquean el lanzamiento
 
-| Pendiente                        | Qué bloquea                                                | Dónde se cambia                                 |
-| -------------------------------- | ---------------------------------------------------------- | ----------------------------------------------- |
-| Confirmar el WhatsApp Business   | Hoy el CTA usa el número del brochure                      | `VITE_WHATSAPP_PHONE` en `.env`                 |
-| Access key de Web3Forms          | Sin la key el formulario valida pero no envía              | `VITE_WEB3FORMS_KEY` en `.env`                  |
-| Foto real del hero               | Se muestra el slot con la nota de material faltante        | `heroImage.src` en `content/home.ts`            |
-| Razón social, CUIT, domicilio    | El JSON-LD de `LocalBusiness` va incompleto                | `localBusiness()` en `composables/useJsonLd.ts` |
-| Dominio                          | Canonical, Open Graph y sitemap usan un dominio provisorio | `origin` en `content/site.ts`                   |
-| Analítica (GA4 + Search Console) | No hay medición de conversiones                            | Sin implementar                                 |
+| Pendiente                      | Qué bloquea                                                 | Dónde se cambia                                 |
+| ------------------------------ | ----------------------------------------------------------- | ----------------------------------------------- |
+| Confirmar el WhatsApp Business | Hoy el CTA usa el número del brochure                       | `VITE_WHATSAPP_PHONE` en `.env`                 |
+| Access key de Web3Forms        | Sin la key el formulario valida pero no envía               | `VITE_WEB3FORMS_KEY` en `.env`                  |
+| Foto real del hero             | Se muestra el slot con la nota de material faltante         | `heroImage.src` en `content/home.ts`            |
+| Domicilio verificable          | El JSON-LD de `LocalBusiness` sale sin `address`            | `address` en `content/site.ts`                  |
+| Razón social y CUIT            | El JSON-LD de `LocalBusiness` va sin `legalName`/`taxID`    | `localBusiness()` en `composables/useJsonLd.ts` |
+| Dominio                        | Canonical, Open Graph, JSON-LD y sitemap usan `*.pages.dev` | `VITE_SITE_URL` en `.env` y en Cloudflare Pages |
+| ID de GA4                      | La medición está implementada pero no envía nada sin ID     | `VITE_GA_ID` en `.env` y en Cloudflare Pages    |
+| Search Console                 | No hay seguimiento de indexación                            | Sin implementar (alta al conectar el dominio)   |
 
-Los CTA de WhatsApp y el botón de envío ya llevan `data-event` para engancharles
-los eventos de conversión cuando entre GA4.
+`VITE_SITE_URL` es obligatoria: sin ella fallan `yarn dev` y `yarn build`. Mientras
+el sitio viva en `*.pages.dev`, `public/_headers` le pone `X-Robots-Tag: noindex`;
+ese bloqueo no alcanza al dominio propio.
+
+Los eventos de conversión (`click_whatsapp`, `click_phone`, `generate_lead`) salen
+de `composables/useAnalytics.ts`. Los clics se miden con un listener delegado en
+`boot/01-analytics.ts`: un enlace `tel:` o de WhatsApp nuevo queda medido sin tocar
+su componente. `generate_lead` se dispara con el OK de Web3Forms, antes de navegar
+a `/gracias`, que no dispara nada al cargar.
 
 ## Cómo trabajar acá
 

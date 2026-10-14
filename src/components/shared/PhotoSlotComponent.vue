@@ -1,10 +1,15 @@
 <script setup lang="ts">
+import BrandMarkComponent from 'components/shared/BrandMarkComponent.vue';
 import { HeroImage } from 'src/commons/interfaces/content';
+import { site } from 'src/content/site';
 
 /**
  * Mientras no exista el material fotografico real, el hero muestra una trama de
  * curvas de nivel y la nota de que foto falta. Es deliberado: una foto de banco de
  * jardin residencial es la senal equivocada para este sitio.
+ *
+ * Mientras tanto, el centro lo ocupa el isotipo. La nota de que foto falta es
+ * una marca de trabajo: se ve solo en `yarn dev`, no en el sitio publicado.
  *
  * Cuando llegue la foto, `image.src` deja de ser null y este slot se reemplaza
  * solo — con `fetchpriority="high"` y sin lazy, porque es el LCP de la pagina.
@@ -38,7 +43,12 @@ defineProps<{ image: HeroImage }>();
       <path d="M0 335C100 315 200 360 300 340S500 305 600 330" />
       <path d="M0 390C100 370 200 415 300 395S500 360 600 385" />
     </svg>
+    <BrandMarkComponent
+      class="photo-slot__mark absolute-center text-cream-50"
+      :size="144"
+    />
     <p
+      v-if="site.showPendingContent"
       class="photo-slot__note text-green-200 text-body2 border-left-green-400 q-pl-md"
       style="max-width: 34ch"
     >

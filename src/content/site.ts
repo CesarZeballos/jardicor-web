@@ -1,3 +1,4 @@
+import { PrivacyNotice } from '../commons/interfaces/content';
 import { SiteData } from '../commons/interfaces/site';
 
 /**
@@ -38,6 +39,20 @@ export const site: SiteData = {
   whatsapp: import.meta.env?.VITE_WHATSAPP_PHONE ?? '',
   whatsappMessage:
     'Hola, quiero solicitar un relevamiento técnico para un predio en Córdoba.',
+  whatsappFloatingLabel: 'Escribinos por WhatsApp',
   web3formsKey: import.meta.env?.VITE_WEB3FORMS_KEY ?? '',
   gaId: import.meta.env?.VITE_GA_ID ?? '',
+  showPendingContent: import.meta.env?.DEV ?? false,
+};
+
+/**
+ * Aviso de privacidad del formulario de contacto. El correo sale de
+ * `site.contact.email`: si cambia la casilla, el aviso se actualiza solo.
+ */
+export const privacyNotice: PrivacyNotice = {
+  buttonLabel: 'Cómo usamos tus datos',
+  paragraphs: [
+    'Usamos estos datos solo para responder tu consulta y coordinar el relevamiento. No los usamos con otros fines ni los vendemos.',
+    `Podés pedirnos acceder a tus datos, corregirlos o eliminarlos escribiendo a ${site.contact.email}.`,
+  ],
 };

@@ -138,6 +138,10 @@ export default defineConfig(({ mode }) => {
       // Una carpeta por ruta con su index.html: URLs limpias sin depender de reglas
       // de reescritura del hosting.
       dirStyle: 'nested',
+      // CSS critico: con `beasties` instalado, vite-ssg mete en cada HTML el CSS
+      // del primer pantallazo y difiere la hoja completa, que deja de bloquear el
+      // render (~1 s en movil, segun PageSpeed). Tambien precarga las fuentes que
+      // usa ese CSS. Sus defaults alcanzan: no hay opciones que pisar.
       // Las rutas de servicio y de sector son dinamicas: el crawler no las descubre
       // solo, hay que enumerarlas.
       includedRoutes: () => [...prerenderedRoutes, NOT_FOUND_ROUTE],

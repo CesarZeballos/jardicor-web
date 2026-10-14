@@ -118,3 +118,10 @@ export interface HomeSection {
   title: string;
   lead?: string;
 }
+
+/** Aviso de privacidad que se abre junto al boton de envio del formulario. */
+export interface PrivacyNotice {
+  /** Nombre accesible del boton que abre el aviso. */
+  buttonLabel: string;
+  paragraphs: string[];
+}

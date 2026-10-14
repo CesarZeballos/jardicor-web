@@ -14,9 +14,6 @@ export interface ToastAction {
   'data-event': string;
 }
 
-/** Cuanto queda en pantalla un aviso que se cierra solo, en milisegundos. */
-const SUCCESS_TIMEOUT = 7000;
-
 /** Tipografia de los botones de accion. Es la misma que usa Notify en el mensaje. */
 const ACTION_FONT_SIZE = '14px';
 
@@ -49,27 +46,17 @@ function replaceCurrent(options: QNotifyCreateOptions): void {
 
 /**
  * Avisos de la aplicacion. Unico lugar que habla con `Notify`: el resto del
- * sitio pide un exito o un fallo y no decide ni color, ni posicion, ni duracion.
+ * sitio pide un fallo y no decide ni color, ni posicion, ni duracion. El exito
+ * no pasa por aca: el formulario navega a `/gracias`.
  *
  * Los colores salen del sistema (`css/quasar.variables.scss`), no de la paleta
- * por defecto de Quasar. El exito va con el verde de marca a fondo pleno. El
- * fallo, en cambio, se resuelve como todo lo demas en este sitio: con borde, no
- * con color plano —el fondo es el crema de la pagina y el rojo `alert-600`
- * queda como acento en el borde—. Un cartel rojo entero grita mas fuerte de lo
- * que el problema amerita. Los dos combinan texto y fondo a 5,9:1, sobre el
+ * por defecto de Quasar. El fallo se resuelve como todo lo demas en este sitio:
+ * con borde, no con color plano —el fondo es el crema de la pagina y el rojo
+ * `alert-600` queda como acento en el borde—. Un cartel rojo entero grita mas
+ * fuerte de lo que el problema amerita. Texto y fondo combinan a 5,9:1, sobre el
  * minimo AA.
  */
 export default function useToast() {
-  function showSuccessToast(message: string): void {
-    replaceCurrent({
-      message,
-      color: 'primary',
-      textColor: 'on-action',
-      timeout: SUCCESS_TIMEOUT,
-      progress: true,
-    });
-  }
-
   /**
    * El aviso de fallo NO se cierra solo: lleva un boton de accion y desaparecer
    * mientras alguien lo va a tocar es peor que quedarse. Se cierra con "Cerrar".
@@ -104,5 +91,5 @@ export default function useToast() {
     });
   }
 
-  return { showSuccessToast, showErrorToast };
+  return { showErrorToast };
 }

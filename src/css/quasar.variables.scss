@@ -325,10 +325,15 @@ $text-width: 68ch !default;
 // del sistema, sin tener que fijar `min-height` a mano en ningun lado.
 $button-border-radius: $generic-border-radius !default;
 $button-font-size: 16px !default;
-$button-line-height: 1.5 !default;
+// Va en `em` y no sin unidad: Quasar usa esta misma variable como tamano del
+// icono dentro del boton. Sin unidad, el icono de un `QBtn` queda en 1,5px.
+$button-line-height: 1.5em !default;
 $button-font-weight: 500 !default;
 $button-padding: 12px 24px !default;
 $button-transition: $generic-hover-transition !default;
+
+// QMenu. Sin sombra: el sistema declara elevacion con borde (`border-line`).
+$menu-box-shadow: none !default;
 
 // QLayout. Las marginales —`QHeader` y `QFooter`— vienen con fondo `$primary` y
 // texto blanco. Se corrigen aca para que salgan con los colores del sitio sin

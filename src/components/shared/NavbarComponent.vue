@@ -5,6 +5,7 @@ import BrandLogoComponent from 'components/shared/BrandLogoComponent.vue';
 import IconComponent from 'components/shared/IconComponent.vue';
 import { activeServices } from 'src/content/services';
 import { contactPage, servicesPage } from 'src/content/pages';
+import { normalizePath } from 'src/utils/url';
 
 const route = useRoute();
 const menuOpen = ref(false);
@@ -22,11 +23,12 @@ const showFullNav: boolean = false;
  * un id que no existe en el documento, ni la ruta a la pagina que ya estamos
  * viendo.
  */
-const ctaTarget = computed(() =>
-  route.path === '/' || route.path === contactPage.meta.path
+const ctaTarget = computed(() => {
+  const path = normalizePath(route.path);
+  return path === '/' || path === contactPage.meta.path
     ? '#contacto'
-    : contactPage.meta.path,
-);
+    : contactPage.meta.path;
+});
 
 watch(
   () => route.fullPath,

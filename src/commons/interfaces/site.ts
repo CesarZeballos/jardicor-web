@@ -46,6 +46,8 @@ export interface SiteData {
   whatsapp: string;
   /** Mensaje con el que se abre el chat. Se puede pisar por llamada. */
   whatsappMessage: string;
+  /** Nombre accesible del boton flotante, que solo muestra el icono. */
+  whatsappFloatingLabel: string;
   /**
    * Access key de Web3Forms, el servicio que recibe el formulario de contacto y
    * lo reenvia por correo. Sale de `VITE_WEB3FORMS_KEY`. Si la variable no esta,
@@ -57,4 +59,9 @@ export interface SiteData {
    * carga `gtag.js` y los eventos de conversion no hacen nada.
    */
   gaId: string;
+  /**
+   * Muestra las marcas de trabajo —respuestas del FAQ sin confirmar, la nota de
+   * foto faltante—. Solo en `yarn dev`: el build publica sin ellas.
+   */
+  showPendingContent: boolean;
 }

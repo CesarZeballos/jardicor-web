@@ -184,8 +184,7 @@ export const homeFaq: FaqItem[] = [
   {
     question: '¿Tienen personal y máquinas propias?',
     answer:
-      'Lucio tiene que confirmar si el personal está en relación de dependencia y si se terceriza algo del equipamiento. Se afirma por escrito, así que tiene que ser exacto.',
-    pending: true,
+      'Sí. Trabajamos con personal y maquinaria propios. Además, somos aliados de Ducati, la marca de herramientas de jardín, con la que equipamos a nuestras cuadrillas.',
   },
   {
     question: '¿Pueden facturar?',
