@@ -27,7 +27,7 @@ const visible = computed(
 </script>
 
 <template>
-  <q-page-sticky v-if="visible" position="bottom-right" :offset="[16, 16]">
+  <q-page-sticky v-if="visible" position="bottom-right" :offset="[32, 32]">
     <q-btn
       class="whatsapp-floating"
       :href="link ?? undefined"

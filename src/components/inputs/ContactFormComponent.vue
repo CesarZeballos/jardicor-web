@@ -43,6 +43,9 @@ const fieldProps = {
   dark: true,
   bgColor: 'surface',
   noErrorIcon: true,
+  // Todos reservan el alto del mensaje de error, tengan reglas o no: asi la
+  // separacion entre filas es pareja.
+  bottomSlots: true,
 } as const;
 
 const router = useRouter();
@@ -153,7 +156,7 @@ function buildFallbackActions(): ToastAction[] {
       :maxlength="MAX_LENGTH.message"
     />
 
-    <div class="contact-form__footer row items-center q-gutter-md q-mt-sm">
+    <div class="contact-form__footer row items-center q-gutter-md">
       <q-btn
         type="submit"
         :label="sending ? 'Enviando…' : 'Enviar consulta'"

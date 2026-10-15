@@ -5,13 +5,31 @@ import WhatsappButtonComponent from 'components/buttons/WhatsappButtonComponent.
 import ContactFormComponent from 'components/inputs/ContactFormComponent.vue';
 import { site } from 'src/content/site';
 import { contactSection } from 'src/content/home';
+
+/**
+ * En la home el titulo es un H2; en /contacto la seccion abre la pagina y su
+ * titulo pasa a ser el H1.
+ */
+withDefaults(
+  defineProps<{
+    title?: string;
+    headingTag?: 'h1' | 'h2';
+    /** Menos aire arriba cuando la seccion abre la pagina, pegada a la cabecera. */
+    compactTop?: boolean;
+  }>(),
+  { title: contactSection.title, headingTag: 'h2', compactTop: false },
+);
 </script>
 
 <template>
-  <section id="contacto" class="q-py-3xl q-py-md-5xl inv">
+  <section
+    id="contacto"
+    class="q-pb-3xl q-pb-md-5xl inv"
+    :class="compactTop ? 'q-pt-2xl q-pt-md-3xl' : 'q-pt-3xl q-pt-md-5xl'"
+  >
     <div class="wrapper">
       <div class="measure q-mb-2xl">
-        <h2>{{ contactSection.title }}</h2>
+        <component :is="headingTag" class="text-h2">{{ title }}</component>
         <p class="text-subtitle1 q-mt-md">{{ contactSection.lead }}</p>
       </div>
 
