@@ -113,12 +113,11 @@ PageSpeed móvil daba 91, con LCP de 2,9 s y ~1.050 ms de bloqueo de render.
 
 ### Bloqueantes de contenido (necesitan al cliente)
 
-| Pendiente                 | Por qué bloquea                                                                                                                  | Dónde se cambia                                     |
-| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
-| **Foto real del hero**    | Hoy el hero muestra el isotipo de forma provisoria. La foto también pasa a ser el LCP y la `image` de `LocalBusiness`.           | `heroImage.src` en `src/content/home.ts`            |
-| **WhatsApp Business**     | Los botones abren `351 306 0922` y el teléfono publicado es `351 392 3565`. Hay que confirmar que la diferencia sea intencional. | `VITE_WHATSAPP_PHONE`                               |
-| **Domicilio verificable** | `LocalBusiness` sale sin `address`.                                                                                              | `address` en `src/content/site.ts`                  |
-| **Razón social y CUIT**   | `LocalBusiness` sale sin `legalName` / `taxID`.                                                                                  | `localBusiness()` en `src/composables/useJsonLd.ts` |
+| Pendiente                 | Por qué bloquea                                                                                                        | Dónde se cambia                                     |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| **Foto real del hero**    | Hoy el hero muestra el isotipo de forma provisoria. La foto también pasa a ser el LCP y la `image` de `LocalBusiness`. | `heroImage.src` en `src/content/home.ts`            |
+| **Domicilio verificable** | `LocalBusiness` sale sin `address`.                                                                                    | `address` en `src/content/site.ts`                  |
+| **Razón social y CUIT**   | `LocalBusiness` sale sin `legalName` / `taxID`.                                                                        | `localBusiness()` en `src/composables/useJsonLd.ts` |
 
 ### Para revisar con el cliente
 

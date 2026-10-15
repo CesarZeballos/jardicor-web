@@ -17,7 +17,7 @@ const institutionalPages = [worksPage, aboutPage, contactPage].filter(
       <div class="footer__grid">
         <div>
           <router-link class="brand" to="/" aria-label="Jardicor, ir al inicio">
-            <BrandLogoComponent :size="40" />
+            <BrandLogoComponent :height="40" />
           </router-link>
           <p
             class="text-body2 text-content-soft q-mt-md"

@@ -232,7 +232,6 @@ h6 {
    hacia arriba. Donde el diseno separa con `gap`, la regla va aca; la direccion y
    la alineacion siguen saliendo de `row` / `column` / `items-*`.
    Los valores salen del mismo mapa `$spaces` que las clases. */
-.brand__mark,
 .step__header {
   gap: map-get($space-md, x);
 }
@@ -257,31 +256,10 @@ h6 {
 /***************************************/
 /*          MARCA                      */
 /***************************************/
-/* Solo el reset del enlace: la disposicion la ponen `row items-center`. */
+/* Solo el reset del enlace: el logo es un SVG que hereda `color`. */
 .brand {
   text-decoration: none;
   color: inherit;
-}
-
-/* Tipografia de marca: dos tamanos fijos con tracking propio, fuera de la escala. */
-.brand__name {
-  display: block;
-  font-family: $display-font-family;
-  font-weight: 600;
-  font-size: 21px;
-  letter-spacing: 0.1em;
-  line-height: 1;
-}
-
-.brand__tagline {
-  display: block;
-  font-family: $display-font-family;
-  font-weight: 500;
-  font-size: 8.5px;
-  letter-spacing: 0.2em;
-  line-height: 1;
-  margin-top: 3px;
-  color: var(--q-content-soft, map-get($custom-colors, content-soft));
 }
 
 /***************************************/

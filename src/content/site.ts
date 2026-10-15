@@ -8,7 +8,6 @@ import { SiteData } from '../commons/interfaces/site';
  * PENDIENTES DEL CLIENTE (documento de arranque, punto 3.7):
  * · TODO: razon social, CUIT y domicilio verificable para completar el JSON-LD.
  *   El domicilio va en `address`, abajo; hasta entonces no se emite.
- * · confirmar que el numero de `VITE_WHATSAPP_PHONE` sea el WhatsApp Business
  * · access key de Web3Forms en `VITE_WEB3FORMS_KEY`, con la casilla donde se
  *   quieren recibir las consultas
  * · dominio definitivo: cambiar `VITE_SITE_URL` en `.env` y en Cloudflare Pages
@@ -25,8 +24,8 @@ export const site: SiteData = {
   // TODO: domicilio verificable del cliente. No cargar uno de ejemplo.
   address: null,
   contact: {
-    phone: '+54 351 392 3565',
-    phoneLink: '+543513923565',
+    phone: '+54 9 351 306-0922',
+    phoneLink: '+5493513060922',
     email: 'jardicorespaciosverdes@gmail.com',
     instagram: '@jardicordoba',
     instagramUrl: 'https://instagram.com/jardicordoba',

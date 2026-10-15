@@ -24,7 +24,7 @@ const year = new Date().getFullYear();
       <div class="row q-col-gutter-y-2xl q-col-gutter-x-4xl">
         <div class="col-12 col-md-6">
           <router-link class="brand" to="/" aria-label="Jardicor, ir al inicio">
-            <BrandLogoComponent :size="40" />
+            <BrandLogoComponent :height="40" />
           </router-link>
           <p
             class="text-body2 text-content-soft q-mt-md"

@@ -31,7 +31,7 @@ export default function useJsonLd() {
       logo: `${site.origin}${site.logo}`,
       // Provisoria: la imagen de Open Graph, hasta tener la foto real del hero.
       image: `${site.origin}${site.ogImage}`,
-      telephone: site.contact.phone.replace(/\s/g, ''),
+      telephone: site.contact.phoneLink,
       email: site.contact.email,
       areaServed: [
         { '@type': 'City', name: 'Córdoba Capital' },

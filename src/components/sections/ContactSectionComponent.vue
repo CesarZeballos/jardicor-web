@@ -39,7 +39,7 @@ withDefaults(
         <aside
           class="contact-card bg-surface border-line column justify-center q-pa-xl"
         >
-          <BrandLogoComponent :size="44" />
+          <BrandLogoComponent :height="44" />
 
           <div class="contact-card__data column">
             <a :href="`tel:${site.contact.phoneLink}`">

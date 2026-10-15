@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 280" width="260" height="280">
+  <defs><clipPath id="c"><circle cx="130" cy="125" r="110"/></clipPath></defs>
+  <g fill="none" stroke="#174538" stroke-width="10" stroke-linecap="butt">
+    <circle cx="130" cy="125" r="110"/>
+    <line x1="130" y1="15" x2="130" y2="265"/>
+    <g clip-path="url(#c)">
+      <line x1="130" y1="114" x2="30" y2="14"/>
+      <line x1="130" y1="114" x2="230" y2="14"/>
+      <line x1="130" y1="207" x2="0" y2="77"/>
+      <line x1="130" y1="207" x2="260" y2="77"/>
+    </g>
+  </g>
+</svg>

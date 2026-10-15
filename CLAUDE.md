@@ -297,16 +297,15 @@ el `hover` — no hay ninguna que pise un tamaño de fuente ni un escalón de es
 
 ## Pendientes que bloquean el lanzamiento
 
-| Pendiente                      | Qué bloquea                                                 | Dónde se cambia                                 |
-| ------------------------------ | ----------------------------------------------------------- | ----------------------------------------------- |
-| Confirmar el WhatsApp Business | Hoy el CTA usa el número del brochure                       | `VITE_WHATSAPP_PHONE` en `.env`                 |
-| Access key de Web3Forms        | Sin la key el formulario valida pero no envía               | `VITE_WEB3FORMS_KEY` en `.env`                  |
-| Foto real del hero             | Se muestra el slot con la nota de material faltante         | `heroImage.src` en `content/home.ts`            |
-| Domicilio verificable          | El JSON-LD de `LocalBusiness` sale sin `address`            | `address` en `content/site.ts`                  |
-| Razón social y CUIT            | El JSON-LD de `LocalBusiness` va sin `legalName`/`taxID`    | `localBusiness()` en `composables/useJsonLd.ts` |
-| Dominio                        | Canonical, Open Graph, JSON-LD y sitemap usan `*.pages.dev` | `VITE_SITE_URL` en `.env` y en Cloudflare Pages |
-| ID de GA4                      | La medición está implementada pero no envía nada sin ID     | `VITE_GA_ID` en `.env` y en Cloudflare Pages    |
-| Search Console                 | No hay seguimiento de indexación                            | Sin implementar (alta al conectar el dominio)   |
+| Pendiente               | Qué bloquea                                                 | Dónde se cambia                                 |
+| ----------------------- | ----------------------------------------------------------- | ----------------------------------------------- |
+| Access key de Web3Forms | Sin la key el formulario valida pero no envía               | `VITE_WEB3FORMS_KEY` en `.env`                  |
+| Foto real del hero      | Se muestra el slot con la nota de material faltante         | `heroImage.src` en `content/home.ts`            |
+| Domicilio verificable   | El JSON-LD de `LocalBusiness` sale sin `address`            | `address` en `content/site.ts`                  |
+| Razón social y CUIT     | El JSON-LD de `LocalBusiness` va sin `legalName`/`taxID`    | `localBusiness()` en `composables/useJsonLd.ts` |
+| Dominio                 | Canonical, Open Graph, JSON-LD y sitemap usan `*.pages.dev` | `VITE_SITE_URL` en `.env` y en Cloudflare Pages |
+| ID de GA4               | La medición está implementada pero no envía nada sin ID     | `VITE_GA_ID` en `.env` y en Cloudflare Pages    |
+| Search Console          | No hay seguimiento de indexación                            | Sin implementar (alta al conectar el dominio)   |
 
 `VITE_SITE_URL` es obligatoria: sin ella fallan `yarn dev` y `yarn build`. Mientras
 el sitio viva en `*.pages.dev`, `public/_headers` le pone `X-Robots-Tag: noindex`;

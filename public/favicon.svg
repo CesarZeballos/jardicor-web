@@ -1,9 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="10" fill="#174538"/>
-  <g fill="none" stroke="#F5F3E7" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="32" cy="30" r="17"/>
-    <path d="M32 11v41"/>
-    <path d="M19.8 17.8L32 30l12.2-12.2"/>
-    <path d="M16 29l16 16 16-16"/>
+  <style>
+    g { stroke: #174538; }
+    @media (prefers-color-scheme: dark) { g { stroke: #F5F3E7; } }
+  </style>
+  <defs><clipPath id="c"><circle cx="130" cy="125" r="110"/></clipPath></defs>
+  <g fill="none" stroke-width="12" transform="translate(32 32) scale(0.245) translate(-130 -137.5)">
+    <circle cx="130" cy="125" r="110"/>
+    <path d="M130 15v250"/>
+    <g clip-path="url(#c)">
+      <path d="M30 14l100 100 100-100"/>
+      <path d="M0 77l130 130 130-130"/>
+    </g>
   </g>
 </svg>
